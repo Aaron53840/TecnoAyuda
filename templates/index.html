@@ -1,0 +1,211 @@
+{% extends "base.html" %}
+
+{% block title %}TecnoAyuda - Soluciones simples paso a paso para tus dispositivos{% endblock %}
+{% block meta_description %}¿Tienes un problema con tu PC o celular? En TecnoAyuda encuentras soluciones sencillas explicadas paso a paso.{% endblock %}
+
+{% block contenido %}
+
+<!-- 1. Hero / Portada Principal -->
+<section class="hero-section">
+  <div class="hero-tagline">
+    <span>🛠️</span> Soporte técnico simple y confiable
+  </div>
+
+  <h1 class="hero-title">¿Qué problema tienes con tu dispositivo?</h1>
+  <p class="hero-subtitle">Encuentra soluciones simples paso a paso.</p>
+
+  <!-- Buscador Grande -->
+  <div class="search-box-wrapper">
+    <form action="{{ url_for('buscar') }}" method="get" class="search-form">
+      <div class="search-input-group">
+        <span class="search-icon" aria-hidden="true">🔍</span>
+        <input 
+          type="text" 
+          id="q" 
+          name="q" 
+          class="search-input" 
+          placeholder="Buscar un problema... (ej. Windows lento, Wi-Fi, batería, poco espacio)"
+          aria-label="Buscar un problema tecnológico"
+          required
+        >
+      </div>
+      <button type="submit" class="btn btn-primary search-button">
+        Buscar solución
+      </button>
+    </form>
+  </div>
+
+  <!-- Accesos rápidos / Categorías -->
+  <div class="quick-access-section">
+    <span class="quick-access-label">Accesos rápidos:</span>
+    <a href="{{ url_for('pc') }}" class="quick-pill">🖥️ PC</a>
+    <a href="{{ url_for('celulares') }}" class="quick-pill">📱 Celular</a>
+    <a href="{{ url_for('pc', sistema='Windows') }}" class="quick-pill">🪟 Windows</a>
+    <a href="{{ url_for('celulares', sistema='Android') }}" class="quick-pill">🤖 Android</a>
+    <a href="{{ url_for('celulares', sistema='iOS') }}" class="quick-pill">🍎 iOS</a>
+    <a href="{{ url_for('buscar', q='Internet') }}" class="quick-pill">🌐 Internet</a>
+  </div>
+</section>
+
+<!-- 2. Problemas Frecuentes -->
+<section class="section" id="problemas-frecuentes">
+  <div class="section-header">
+    <h2 class="section-title">
+      <span>⚡</span> Problemas frecuentes
+    </h2>
+    <p class="section-desc">Las fallas más habituales en computadores y teléfonos con su solución paso a paso.</p>
+  </div>
+
+  <div class="problems-grid">
+    {% for prob in problemas_frecuentes %}
+      {% include "_tarjeta_problema.html" %}
+    {% endfor %}
+  </div>
+
+  <div style="text-align: center; margin-top: 2rem;">
+    <a href="{{ url_for('buscar') }}" class="btn btn-outline">
+      Ver todos los problemas del catálogo (301 soluciones) →
+    </a>
+  </div>
+</section>
+
+<!-- 3. Categorías y Explorador por Dispositivo -->
+<section class="section">
+  <div class="section-header">
+    <h2 class="section-title">
+      <span>📂</span> Explorar por categoría de dispositivo
+    </h2>
+    <p class="section-desc">Selecciona la plataforma de tu equipo para ver guías organizadas por componentes.</p>
+  </div>
+
+  <div class="device-selector-grid">
+    <!-- Tarjeta PC -->
+    <div class="device-card">
+      <div>
+        <div class="device-card-header">
+          <span class="device-card-icon">🖥️</span>
+          <div>
+            <h3 class="device-card-title">Soporte para PC</h3>
+            <p class="section-desc" style="margin: 0;">Computadores y portátiles</p>
+          </div>
+        </div>
+
+        <div class="device-card-systems">
+          <span class="badge badge-system">🪟 Windows</span>
+          <span class="badge badge-system">🍎 macOS</span>
+          <span class="badge badge-system">🐧 Linux</span>
+        </div>
+
+        <p class="device-card-desc">
+          Soluciona lentitud de inicio, fallas de internet cableado y Wi-Fi, falta de espacio en disco, errores de programas y periféricos.
+        </p>
+      </div>
+
+      <div>
+        <a href="{{ url_for('pc') }}" class="btn btn-secondary" style="width: 100%;">
+          Ver soluciones para PC →
+        </a>
+      </div>
+    </div>
+
+    <!-- Tarjeta Celulares -->
+    <div class="device-card">
+      <div>
+        <div class="device-card-header">
+          <span class="device-card-icon">📱</span>
+          <div>
+            <h3 class="device-card-title">Soporte para Celulares</h3>
+            <p class="section-desc" style="margin: 0;">Smartphones y tablets</p>
+          </div>
+        </div>
+
+        <div class="device-card-systems">
+          <span class="badge badge-system">🤖 Android</span>
+          <span class="badge badge-system">📱 iOS (iPhone)</span>
+        </div>
+
+        <p class="device-card-desc">
+          Resuelve problemas de batería que dura poco, sobrecalentamiento, memoria llena, desconexiones de red, Play Store y App Store.
+        </p>
+      </div>
+
+      <div>
+        <a href="{{ url_for('celulares') }}" class="btn btn-secondary" style="width: 100%;">
+          Ver soluciones para Celulares →
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 4. Sección Diagnóstico Guiado -->
+<section class="section">
+  <div class="diagnostic-banner">
+    <div class="diagnostic-banner-text">
+      <div class="diagnostic-banner-tag">Asistente de ayuda rápida</div>
+      <h2 class="diagnostic-banner-title">¿No sabes cuál es el problema?</h2>
+      <p class="diagnostic-banner-desc">Responde unas preguntas y te ayudaremos a identificarlo.</p>
+    </div>
+    <div>
+      <a href="{{ url_for('diagnostico') }}" class="btn btn-primary" style="white-space: nowrap;">
+        Comenzar diagnóstico →
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- 5. Sección Herramientas -->
+<section class="section">
+  <div class="section-header">
+    <h2 class="section-title">
+      <span>🛠️</span> Herramientas
+    </h2>
+    <p class="section-desc">Utilidades prácticas para ayudarte a diagnosticar, revisar y encontrar soluciones para tu equipo.</p>
+  </div>
+
+  <div class="tools-grid">
+    <!-- Herramienta 1: Diagnóstico -->
+    <div class="tool-card">
+      <div>
+        <span class="tool-card-icon">🩺</span>
+        <h3 class="tool-card-title">Diagnóstico</h3>
+        <p class="tool-card-desc">Identifica posibles problemas de tu dispositivo respondiendo preguntas sencillas.</p>
+      </div>
+      <div>
+        <a href="{{ url_for('diagnostico') }}" class="btn btn-outline" style="width: 100%;">
+          Comenzar diagnóstico →
+        </a>
+      </div>
+    </div>
+
+    <!-- Herramienta 2: Checklist -->
+    <div class="tool-card">
+      <div>
+        <span class="tool-card-icon">📋</span>
+        <h3 class="tool-card-title">Checklist</h3>
+        <p class="tool-card-desc">Revisa paso a paso los aspectos básicos de tu equipo para prevenir fallas.</p>
+      </div>
+      <div>
+        <a href="{{ url_for('mantenimiento') }}" class="btn btn-outline" style="width: 100%;">
+          Abrir checklist →
+        </a>
+      </div>
+    </div>
+
+    <!-- Herramienta 3: Selector de dispositivo -->
+    <div class="tool-card">
+      <div>
+        <span class="tool-card-icon">💻</span>
+        <h3 class="tool-card-title">Selector de dispositivo</h3>
+        <p class="tool-card-desc">Encuentra soluciones según el dispositivo que estás utilizando.</p>
+      </div>
+      <div>
+        <a href="{{ url_for('pc') }}" class="btn btn-outline" style="width: 100%;">
+          Seleccionar equipo →
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

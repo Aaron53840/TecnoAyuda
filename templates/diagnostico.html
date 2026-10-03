@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+
+{% block title %}Diagnóstico rápido - Asistente de problemas - TecnoAyuda{% endblock %}
+{% block meta_description %}Responde 3 preguntas simples y encuentra la solución exacta para tu problema de computador o celular.{% endblock %}
+
+{% block contenido %}
+
+<div class="section-header">
+  <div class="breadcrumbs">
+    <a href="{{ url_for('inicio') }}">Inicio</a>
+    <span class="breadcrumb-sep">/</span>
+    <span>Diagnóstico Rápido</span>
+  </div>
+
+  <h1 class="section-title">
+    <span>🩺</span> Asistente de Diagnóstico Rápido
+  </h1>
+  <p class="section-desc">Identifica cuál es el problema respondiendo unas sencillas preguntas sobre tu dispositivo.</p>
+</div>
+
+<!-- Flujo del Asistente -->
+<div class="diag-flow-container">
+  <form method="get" action="{{ url_for('diagnostico') }}">
+    
+    <!-- Paso 1: Tipo de Dispositivo -->
+    <div class="diag-step">
+      <div class="diag-step-number">Paso 1</div>
+      <h2 class="diag-step-title">¿Qué tipo de dispositivo tienes?</h2>
+      
+      <div class="diag-options-grid">
+        <a 
+          href="{{ url_for('diagnostico', dispositivo='pc') }}" 
+          class="diag-option-btn {% if tipo_dispositivo == 'pc' %}selected{% endif %}"
+        >
+          <span style="font-size: 1.5rem;">🖥️</span>
+          <span>Computador (PC / Notebook)</span>
+        </a>
+        
+        <a 
+          href="{{ url_for('diagnostico', dispositivo='celular') }}" 
+          class="diag-option-btn {% if tipo_dispositivo == 'celular' %}selected{% endif %}"
+        >
+          <span style="font-size: 1.5rem;">📱</span>
+          <span>Celular / Smartphone</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Paso 2: Sistema Operativo -->
+    {% if tipo_dispositivo %}
+      <input type="hidden" name="dispositivo" value="{{ tipo_dispositivo }}">
+      <div class="diag-step" style="border-top: 1px solid var(--border-subtle); padding-top: 1.5rem;">
+        <div class="diag-step-number">Paso 2</div>
+        <h2 class="diag-step-title">¿Qué sistema operativo utiliza?</h2>
+
+        <div class="diag-options-grid">
+          {% for s in sistemas_disponibles %}
+            <a 
+              href="{{ url_for('diagnostico', dispositivo=tipo_dispositivo, sistema=s) }}" 
+              class="diag-option-btn {% if sistema == s %}selected{% endif %}"
+            >
+              <span style="font-size: 1.25rem;">{{ icono_sistema(s) }}</span>
+              <span>{{ s }}</span>
+            </a>
+          {% endfor %}
+        </div>
+      </div>
+    {% endif %}
+
+    <!-- Paso 3: Categoría opcional y botón de filtro -->
+    {% if sistema %}
+      <input type="hidden" name="sistema" value="{{ sistema }}">
+      <div class="diag-step" style="border-top: 1px solid var(--border-subtle); padding-top: 1.5rem;">
+        <div class="diag-step-number">Paso 3</div>
+        <h2 class="diag-step-title">¿En qué componente o área ocurre la falla? (Opcional)</h2>
+
+        <div style="display: flex; gap: 0.75rem; max-width: 540px; flex-wrap: wrap;">
+          <div style="flex: 1; min-width: 220px;">
+            <select name="categoria" id="categoria" class="form-control">
+              <option value="" {{ 'selected' if not categoria }}>Todas las categorías de {{ sistema }}</option>
+              {% for c in categorias_disponibles %}
+                <option value="{{ c }}" {{ 'selected' if categoria == c }}>{{ icono_categoria(c) }} {{ c }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <button type="submit" class="btn btn-primary" style="flex-shrink: 0;">
+            Ver soluciones
+          </button>
+        </div>
+      </div>
+    {% endif %}
+
+  </form>
+</div>
+
+<!-- Resultados del Diagnóstico -->
+{% if resultados %}
+  <div class="results-header">
+    <h2 class="section-title" style="font-size: 1.3rem;">
+      <span>💡</span> Soluciones recomendadas
+    </h2>
+    <div class="results-count">
+      Encontrados: <strong>{{ resultados|length }}</strong> problema(s) relacionado(s)
+    </div>
+  </div>
+
+  <div class="problems-grid">
+    {% for prob in resultados %}
+      {% include "_tarjeta_problema.html" %}
+    {% endfor %}
+  </div>
+
+{% elif sistema %}
+  <div class="empty-state">
+    <div class="empty-state-icon">🔍</div>
+    <h3 class="empty-state-title">No hay problemas para esta combinación</h3>
+    <p class="empty-state-desc">Intenta seleccionando otra categoría o utilizando el buscador general.</p>
+    <a href="{{ url_for('buscar') }}" class="btn btn-secondary">
+      Ir al buscador general
+    </a>
+  </div>
+{% endif %}
+
+{% endblock %}

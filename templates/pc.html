@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block title %}Soporte para PC (Windows, macOS, Linux) - TecnoAyuda{% endblock %}
+{% block meta_description %}Soluciones sencillas a problemas de Windows, macOS y Linux: rendimiento, internet, sonido, impresoras y más.{% endblock %}
+
+{% block contenido %}
+
+<div class="section-header">
+  <div class="breadcrumbs">
+    <a href="{{ url_for('inicio') }}">Inicio</a>
+    <span class="breadcrumb-sep">/</span>
+    <span>Soporte para PC</span>
+  </div>
+
+  <h1 class="section-title">
+    <span>🖥️</span> Soporte para Computadores (PC)
+  </h1>
+  <p class="section-desc">Guías y soluciones paso a paso para sistemas operativos de escritorio.</p>
+</div>
+
+<!-- Barra de Filtros -->
+<div class="filter-bar">
+  <div class="filter-row">
+    <span class="filter-label">Sistema:</span>
+    <div class="filter-pills">
+      <a href="{{ url_for('pc') }}" class="filter-pill {% if not sistema_seleccionado %}active{% endif %}">
+        Todos
+      </a>
+      {% for s in sistemas %}
+        <a 
+          href="{{ url_for('pc', sistema=s) }}" 
+          class="filter-pill {% if sistema_seleccionado == s %}active{% endif %}"
+        >
+          {{ icono_sistema(s) }} {{ s }}
+        </a>
+      {% endfor %}
+    </div>
+  </div>
+
+  {% if categorias %}
+    <form method="get" action="{{ url_for('pc') }}" style="display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap;">
+      <input type="hidden" name="sistema" value="{{ sistema_seleccionado }}">
+      <span class="filter-label">Categoría:</span>
+      <div style="flex: 1; max-width: 320px;">
+        <select name="categoria" id="categoria" class="form-control" onchange="this.form.submit()">
+          <option value="" {{ 'selected' if not categoria_seleccionada }}>Todas las categorías</option>
+          {% for c in categorias %}
+            <option value="{{ c }}" {{ 'selected' if categoria_seleccionada == c }}>{{ icono_categoria(c) }} {{ c }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <button type="submit" class="btn btn-secondary">
+        Filtrar
+      </button>
+      {% if categoria_seleccionada %}
+        <a href="{{ url_for('pc', sistema=sistema_seleccionado) }}" class="btn btn-outline" style="font-size: 0.85rem;">
+          Limpiar filtro
+        </a>
+      {% endif %}
+    </form>
+  {% endif %}
+</div>
+
+<!-- Encabezado de Resultados -->
+<div class="results-header">
+  <div class="results-count">
+    Mostrando <strong>{{ problemas|length }}</strong> problema(s) encontrado(s)
+  </div>
+</div>
+
+<!-- Listado de Problemas en Tarjetas -->
+<div class="problems-grid">
+  {% for prob in problemas %}
+    {% include "_tarjeta_problema.html" %}
+  {% endfor %}
+</div>
+
+{% endblock %}

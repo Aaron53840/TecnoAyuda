@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+
+{% block title %}Mantenimiento del PC - Checklist mensual - TecnoAyuda{% endblock %}
+{% block meta_description %}Checklist simple de mantenimiento para mantener tu PC funcionando bien, explicado paso a paso para estudiantes.{% endblock %}
+
+{% block contenido %}
+
+<div class="section-header">
+  <div class="breadcrumbs">
+    <a href="{{ url_for('inicio') }}">Inicio</a>
+    <span class="breadcrumb-sep">/</span>
+    <a href="{{ url_for('herramientas') }}">Herramientas</a>
+    <span class="breadcrumb-sep">/</span>
+    <span>Checklist de Mantenimiento</span>
+  </div>
+
+  <h1 class="section-title">
+    <span>📋</span> Checklist de Mantenimiento del PC
+  </h1>
+  <p class="section-desc">Tareas recomendadas para realizar al menos una vez al mes y mantener tu equipo en buen estado.</p>
+</div>
+
+<div class="checklist-card">
+  <!-- Contador de progreso -->
+  <div class="checklist-counter">
+    <span id="checklistCounter">0 de 7 tareas completadas</span>
+    <button type="button" id="btnResetChecklist" class="btn btn-text" style="font-size: 0.85rem;">
+      Desmarcar todas
+    </button>
+  </div>
+
+  <form id="mantenimientoChecklist">
+    <ul class="checklist-items">
+      <li class="checklist-item">
+        <input type="checkbox" id="tarea1">
+        <label for="tarea1" class="checklist-text">
+          <strong>Revisar el espacio libre en disco:</strong> Comprueba que tu unidad principal tenga al menos entre un 15% y un 20% de espacio disponible para que el sistema operativo y las aplicaciones funcionen con fluidez.
+        </label>
+      </li>
+
+      <li class="checklist-item">
+        <input type="checkbox" id="tarea2">
+        <label for="tarea2" class="checklist-text">
+          <strong>Eliminar archivos temporales e innecesarios:</strong> Vacía la papelera de reciclaje y borra descargas antiguas o instaladores que ya no utilices.
+        </label>
+      </li>
+
+      <li class="checklist-item">
+        <input type="checkbox" id="tarea3">
+        <label for="tarea3" class="checklist-text">
+          <strong>Revisar programas de inicio automático:</strong> Deshabilita aplicaciones pesadas que se ejecuten solas al encender el equipo para mejorar la velocidad de arranque.
+        </label>
+      </li>
+
+      <li class="checklist-item">
+        <input type="checkbox" id="tarea4">
+        <label for="tarea4" class="checklist-text">
+          <strong>Actualizar el sistema operativo:</strong> Comprueba si existen parches de estabilidad, rendimiento o corrección de fallas en Windows Update o el gestor de tu sistema.
+        </label>
+      </li>
+
+      <li class="checklist-item">
+        <input type="checkbox" id="tarea5">
+        <label for="tarea5" class="checklist-text">
+          <strong>Revisar actualizaciones de seguridad:</strong> Ejecuta un análisis periódico de antivirus o de Windows Defender para descartar la presencia de software no deseado.
+        </label>
+      </li>
+
+      <li class="checklist-item">
+        <input type="checkbox" id="tarea6">
+        <label for="tarea6" class="checklist-text">
+          <strong>Limpieza física exterior:</strong> Limpia con cuidado el teclado, la pantalla y las rejillas de ventilación para prevenir la acumulación de polvo y pelusas.
+        </label>
+      </li>
+
+      <li class="checklist-item">
+        <input type="checkbox" id="tarea7">
+        <label for="tarea7" class="checklist-text">
+          <strong>Comprobar ventiladores y temperatura:</strong> Asegúrate de que el equipo no sobrecaliente y que las entradas de aire no estén obstruidas por superficies blandas como camas o almohadas.
+        </label>
+      </li>
+    </ul>
+  </form>
+
+  <div style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--border-subtle); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
+    <p style="font-size: 0.9rem; color: var(--text-muted); margin: 0;">
+      ¿Tu equipo sigue presentando fallas o lentitud?
+    </p>
+    <a href="{{ url_for('diagnostico') }}" class="btn btn-primary">
+      Ir al diagnóstico rápido →
+    </a>
+  </div>
+</div>
+
+{% endblock %}

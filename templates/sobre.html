@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+
+{% block title %}Sobre TecnoAyuda - Soporte técnico simple y accesible{% endblock %}
+{% block meta_description %}Conoce sobre TecnoAyuda: soluciones simples paso a paso para estudiantes y usuarios de tecnología.{% endblock %}
+
+{% block contenido %}
+
+<div class="section-header">
+  <div class="breadcrumbs">
+    <a href="{{ url_for('inicio') }}">Inicio</a>
+    <span class="breadcrumb-sep">/</span>
+    <span>Sobre TecnoAyuda</span>
+  </div>
+
+  <h1 class="section-title">
+    <span>ℹ️</span> Sobre TecnoAyuda
+  </h1>
+  <p class="section-desc">Soporte técnico simple y accesible para estudiantes y usuarios de tecnología.</p>
+</div>
+
+<div class="about-grid">
+  <!-- 1. ¿Qué es TecnoAyuda? -->
+  <div class="about-card">
+    <h2 class="about-card-title">
+      <span>🎯</span> ¿Qué es TecnoAyuda?
+    </h2>
+    <p class="about-card-content">
+      TecnoAyuda es un portal de soporte técnico básico pensado especialmente para estudiantes. La idea es sencilla: si tienes un inconveniente con tu computador o tu celular, buscas el síntoma y encuentras una solución explicada paso a paso, sin tecnicismos abrumadores ni procesos complicados.
+    </p>
+  </div>
+
+  <!-- 2. ¿Por qué existe? -->
+  <div class="about-card">
+    <h2 class="about-card-title">
+      <span>💡</span> ¿Por qué existe?
+    </h2>
+    <p class="about-card-content">
+      Gran parte de las fallas más comunes —como un sistema lento, un teléfono con poco espacio o problemas de conexión— tienen soluciones que muchos usuarios pueden realizar siguiendo instrucciones claras.
+    </p>
+    <p class="about-card-content" style="margin-top: 0.75rem;">
+      TecnoAyuda busca reunir este tipo de problemas y explicarlos de una manera sencilla, ordenada y fácil de entender.
+    </p>
+  </div>
+
+  <!-- 3. Tecnología y desarrollo -->
+  <div class="about-card">
+    <h2 class="about-card-title">
+      <span>⚙️</span> Tecnología y desarrollo
+    </h2>
+    <div class="about-card-content">
+      <p style="margin-bottom: 0.75rem;">
+        TecnoAyuda es un proyecto educativo desarrollado en Kodland utilizando:
+      </p>
+      <ul style="list-style: none; padding-left: 0; display: flex; flex-direction: column; gap: 0.35rem; margin-bottom: 0.75rem;">
+        <li>• <strong>Python</strong></li>
+        <li>• <strong>Flask</strong></li>
+        <li>• <strong>HTML5</strong></li>
+        <li>• <strong>CSS3</strong></li>
+      </ul>
+      <p>
+        El proyecto busca mantener una estructura sencilla y comprensible, evitando dependencias y tecnologías innecesariamente complejas.
+      </p>
+    </div>
+  </div>
+
+  <!-- 4. Desarrollador y Objetivo -->
+  <div class="about-card">
+    <h2 class="about-card-title">
+      <span>👨‍💻</span> Desarrollador y Objetivo
+    </h2>
+    <div class="about-card-content">
+      <p><strong>Aaron Ramirez</strong></p>
+      <p>Estudiante de enseñanza media.</p>
+      <p>Proyecto educativo desarrollado en Kodland.</p>
+      <p style="margin-bottom: 1rem;">Año de inicio: 2026</p>
+
+      <div style="background-color: var(--bg-surface-alt); border-left: 3px solid var(--purple-primary); padding: 0.75rem 1rem; border-radius: var(--radius-sm); margin-bottom: 1rem;">
+        <span style="font-size: 0.8rem; font-weight: 700; color: #c4b5fd; text-transform: uppercase; letter-spacing: 0.04em;">Objetivo del proyecto</span>
+        <p style="font-style: italic; color: var(--text-main); margin-top: 0.25rem;">
+          "Proyecto desarrollado con el objetivo de hacer que la tecnología sea más fácil de entender."
+        </p>
+      </div>
+
+      <div style="border-top: 1px solid var(--border-subtle); padding-top: 0.75rem;">
+        <span style="font-size: 0.85rem; font-weight: 600; color: var(--text-main);">Información de contacto</span>
+        <p style="margin-top: 0.25rem; font-size: 0.9rem;">
+          Correo electrónico: <a href="mailto:aaronramirezveliz874@gmail.com" style="color: var(--purple-primary); text-decoration: underline;">aaronramirezveliz874@gmail.com</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div style="text-align: center; margin-top: 3rem;">
+  <a href="{{ url_for('inicio') }}" class="btn btn-primary">
+    Volver al inicio
+  </a>
+</div>
+
+{% endblock %}

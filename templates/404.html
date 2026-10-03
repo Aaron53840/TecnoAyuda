@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}404 - Página no encontrada - TecnoAyuda{% endblock %}
+{% block meta_description %}La página que buscas no existe o ha cambiado de dirección en TecnoAyuda.{% endblock %}
+
+{% block contenido %}
+
+<div class="error-card">
+  <div class="error-code">404</div>
+  <h1 class="error-title">Página no encontrada</h1>
+  <p class="error-desc">
+    El problema o la sección que estás buscando no existe, ha cambiado de dirección o el enlace ingresado es incorrecto.
+  </p>
+  <div style="display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap;">
+    <a href="{{ url_for('inicio') }}" class="btn btn-primary">
+      Volver al inicio
+    </a>
+    <a href="{{ url_for('buscar') }}" class="btn btn-secondary">
+      Buscar una solución
+    </a>
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block title %}Soporte para Celulares (Android, iOS) - TecnoAyuda{% endblock %}
+{% block meta_description %}Soluciones sencillas a problemas de Android e iOS: batería, almacenamiento, Wi-Fi, cámara, notificaciones y más.{% endblock %}
+
+{% block contenido %}
+
+<div class="section-header">
+  <div class="breadcrumbs">
+    <a href="{{ url_for('inicio') }}">Inicio</a>
+    <span class="breadcrumb-sep">/</span>
+    <span>Soporte para Celulares</span>
+  </div>
+
+  <h1 class="section-title">
+    <span>📱</span> Soporte para Celulares y Móviles
+  </h1>
+  <p class="section-desc">Guías prácticas paso a paso para resolver fallas en teléfonos Android e iPhone.</p>
+</div>
+
+<!-- Barra de Filtros -->
+<div class="filter-bar">
+  <div class="filter-row">
+    <span class="filter-label">Sistema:</span>
+    <div class="filter-pills">
+      <a href="{{ url_for('celulares') }}" class="filter-pill {% if not sistema_seleccionado %}active{% endif %}">
+        Todos
+      </a>
+      {% for s in sistemas %}
+        <a 
+          href="{{ url_for('celulares', sistema=s) }}" 
+          class="filter-pill {% if sistema_seleccionado == s %}active{% endif %}"
+        >
+          {{ icono_sistema(s) }} {{ s }}
+        </a>
+      {% endfor %}
+    </div>
+  </div>
+
+  {% if categorias %}
+    <form method="get" action="{{ url_for('celulares') }}" style="display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap;">
+      <input type="hidden" name="sistema" value="{{ sistema_seleccionado }}">
+      <span class="filter-label">Categoría:</span>
+      <div style="flex: 1; max-width: 320px;">
+        <select name="categoria" id="categoria" class="form-control" onchange="this.form.submit()">
+          <option value="" {{ 'selected' if not categoria_seleccionada }}>Todas las categorías</option>
+          {% for c in categorias %}
+            <option value="{{ c }}" {{ 'selected' if categoria_seleccionada == c }}>{{ icono_categoria(c) }} {{ c }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <button type="submit" class="btn btn-secondary">
+        Filtrar
+      </button>
+      {% if categoria_seleccionada %}
+        <a href="{{ url_for('celulares', sistema=sistema_seleccionado) }}" class="btn btn-outline" style="font-size: 0.85rem;">
+          Limpiar filtro
+        </a>
+      {% endif %}
+    </form>
+  {% endif %}
+</div>
+
+<!-- Encabezado de Resultados -->
+<div class="results-header">
+  <div class="results-count">
+    Mostrando <strong>{{ problemas|length }}</strong> problema(s) encontrado(s)
+  </div>
+</div>
+
+<!-- Listado de Problemas en Tarjetas -->
+<div class="problems-grid">
+  {% for prob in problemas %}
+    {% include "_tarjeta_problema.html" %}
+  {% endfor %}
+</div>
+
+{% endblock %}

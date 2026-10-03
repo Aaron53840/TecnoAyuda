@@ -1,0 +1,6 @@
+Coloca aquí tus propios íconos (formato .svg o .png recomendado) si quieres
+reemplazar los emoji usados actualmente en el sitio (🔧 💻 📱 etc.).
+
+Ejemplo de uso en una plantilla HTML:
+
+<img src="{{ url_for('static', filename='icons/windows.svg') }}" alt="Windows">

@@ -1,0 +1,6 @@
+Coloca aquí tus propias imágenes (por ejemplo, capturas de pantalla o
+ilustraciones) si quieres reemplazar los íconos con emoji del sitio.
+
+Ejemplo de uso en una plantilla HTML:
+
+<img src="{{ url_for('static', filename='images/nombre-archivo.png') }}" alt="Descripción">

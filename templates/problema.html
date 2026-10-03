@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+
+{% block title %}{{ p.titulo }} - Guía de Solución - TecnoAyuda{% endblock %}
+{% block meta_description %}{{ p.descripcion[:140] }}{% endblock %}
+
+{% block contenido %}
+
+<!-- Breadcrumbs -->
+<nav class="breadcrumbs" aria-label="Ruta de navegación">
+  <a href="{{ url_for('inicio') }}">Inicio</a>
+  <span class="breadcrumb-sep">/</span>
+  <a href="{{ url_for('pc') if p.sistema in ['Windows','macOS','Linux'] else url_for('celulares') }}">
+    {{ icono_sistema(p.sistema) }} {{ p.sistema }}
+  </a>
+  <span class="breadcrumb-sep">/</span>
+  <span style="color: var(--text-main); font-weight: 500;">{{ p.titulo }}</span>
+</nav>
+
+<!-- Tarjeta Principal del Problema y su Solución -->
+<article class="problem-detail-card">
+  <!-- Encabezado con Badges -->
+  <header class="problem-detail-header">
+    <div class="problem-card-badges" style="margin-bottom: 0.75rem;">
+      <span class="badge badge-system">{{ icono_sistema(p.sistema) }} Sistema: {{ p.sistema }}</span>
+      <span class="badge badge-category">{{ icono_categoria(p.categoria) }} Categoría: {{ p.categoria }}</span>
+      {% if p.dificultad %}
+        <span class="badge badge-difficulty badge-{{ p.dificultad|lower|replace('á','a') }}">
+          Dificultad: {{ p.dificultad }}
+        </span>
+      {% endif %}
+    </div>
+
+    <h1 class="problem-detail-title">{{ p.titulo }}</h1>
+    <p class="problem-detail-desc">{{ p.descripcion }}</p>
+  </header>
+
+  <!-- 1. Posibles Causas -->
+  <section>
+    <h2 class="problem-section-title">
+      <span>🔍</span> ¿Por qué ocurre este problema? (Causas comunes)
+    </h2>
+    <ul class="causes-list">
+      {% for causa in p.causas %}
+        <li class="cause-item">
+          <span class="cause-dot">•</span>
+          <span>{{ causa }}</span>
+        </li>
+      {% endfor %}
+    </ul>
+  </section>
+
+  <!-- 2. Solución Paso a Paso -->
+  <section>
+    <h2 class="problem-section-title">
+      <span>🛠️</span> Solución paso a paso
+    </h2>
+    <ol class="steps-list">
+      {% for paso in p.pasos %}
+        <li class="step-item">
+          <span class="step-number">{{ loop.index }}</span>
+          <div>{{ paso }}</div>
+        </li>
+      {% endfor %}
+    </ol>
+  </section>
+
+  <!-- 3. Consejo Práctico (si existe) -->
+  {% if p.consejo %}
+    <aside class="tip-box">
+      <div class="tip-title">
+        <span>💡</span> Consejo de prevención
+      </div>
+      <div class="tip-content">
+        {{ p.consejo }}
+      </div>
+    </aside>
+  {% endif %}
+
+  <!-- 4. Palabras clave / Etiquetas de búsqueda -->
+  {% if p.palabras_clave %}
+    <div style="margin-top: 1.5rem; padding-top: 1.25rem; border-top: 1px solid var(--border-subtle);">
+      <span style="font-size: 0.8rem; font-weight: 600; text-transform: uppercase; color: var(--text-dim); letter-spacing: 0.04em;">
+        Temas relacionados:
+      </span>
+      <div class="tags-container">
+        {% for tag in p.palabras_clave %}
+          <span class="tag-pill">{{ tag }}</span>
+        {% endfor %}
+      </div>
+    </div>
+  {% endif %}
+</article>
+
+<!-- Acciones Rápidas -->
+<div style="display: flex; gap: 1rem; align-items: center; justify-content: space-between; flex-wrap: wrap; margin-bottom: 3rem;">
+  <a href="{{ url_for('buscar') }}" class="btn btn-secondary">
+    🔍 Buscar otro problema
+  </a>
+  <a href="{{ url_for('diagnostico') }}" class="btn btn-outline">
+    🩺 Ir al diagnóstico guiado
+  </a>
+</div>
+
+<!-- 5. Problemas Relacionados -->
+{% if relacionados %}
+  <section class="section">
+    <div class="section-header">
+      <h2 class="section-title">
+        <span>🔗</span> Problemas relacionados
+      </h2>
+      <p class="section-desc">Otras fallas que suelen presentarse en circunstancias similares.</p>
+    </div>
+
+    <div class="problems-grid">
+      {% for prob in relacionados %}
+        {% include "_tarjeta_problema.html" %}
+      {% endfor %}
+    </div>
+  </section>
+{% endif %}
+
+{% endblock %}

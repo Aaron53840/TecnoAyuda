@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="{% block meta_description %}TecnoAyuda: soluciones paso a paso para problemas tecnológicos en PC y celulares.{% endblock %}">
+  <meta name="author" content="Aaron Ramirez">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/logo.png') }}">
+
+  <!-- Tipografía Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Estilos del sitio -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+  <title>{% block title %}TecnoAyuda - Soluciones paso a paso{% endblock %}</title>
+</head>
+<body>
+
+  <!-- Barra de Navegación Superior -->
+  <header class="site-header">
+    <div class="container header-container">
+      <a href="{{ url_for('inicio') }}" class="brand" aria-label="TecnoAyuda - Inicio">
+        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo de TecnoAyuda" class="brand-logo" width="38" height="38">
+        <span class="brand-text">Tecno<span>Ayuda</span></span>
+      </a>
+
+      <!-- Navegación de Escritorio: Inicio | Problemas | Diagnóstico | Herramientas | Sobre TecnoAyuda -->
+      <nav class="main-nav" aria-label="Navegación principal">
+        <ul class="nav-list">
+          <li>
+            <a href="{{ url_for('inicio') }}" class="nav-link {% if request.endpoint == 'inicio' %}active{% endif %}">Inicio</a>
+          </li>
+          <li class="nav-item-dropdown">
+            <a href="{{ url_for('pc') }}" class="nav-link {% if request.endpoint in ['pc', 'celulares', 'buscar'] %}active{% endif %}">
+              Problemas <span class="dropdown-arrow" aria-hidden="true">▾</span>
+            </a>
+            <ul class="nav-dropdown-menu">
+              <li><a href="{{ url_for('pc') }}" class="dropdown-link">🖥️ Soporte para PC</a></li>
+              <li><a href="{{ url_for('celulares') }}" class="dropdown-link">📱 Soporte para Celulares</a></li>
+              <li><a href="{{ url_for('buscar') }}" class="dropdown-link">🔍 Buscar un problema</a></li>
+            </ul>
+          </li>
+          <li>
+            <a href="{{ url_for('diagnostico') }}" class="nav-link {% if request.endpoint == 'diagnostico' %}active{% endif %}">Diagnóstico</a>
+          </li>
+          <li class="nav-item-dropdown">
+            <a href="{{ url_for('herramientas') }}" class="nav-link {% if request.endpoint in ['herramientas', 'mantenimiento'] %}active{% endif %}">
+              Herramientas <span class="dropdown-arrow" aria-hidden="true">▾</span>
+            </a>
+            <ul class="nav-dropdown-menu">
+              <li><a href="{{ url_for('herramientas') }}" class="dropdown-link">🛠️ Todas las herramientas</a></li>
+              <li><a href="{{ url_for('mantenimiento') }}" class="dropdown-link">📋 Checklist de mantenimiento</a></li>
+              <li><a href="{{ url_for('diagnostico') }}" class="dropdown-link">🩺 Diagnóstico rápido</a></li>
+            </ul>
+          </li>
+          <li>
+            <a href="{{ url_for('sobre') }}" class="nav-link {% if request.endpoint == 'sobre' %}active{% endif %}">Sobre TecnoAyuda</a>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- Botón Menú Hamburguesa para Móviles -->
+      <button id="navToggle" class="nav-toggle" aria-label="Abrir menú de navegación" aria-expanded="false" aria-controls="mobileNavPanel">
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+      </button>
+    </div>
+
+    <!-- Menú Desplegable Móvil -->
+    <div id="mobileNavPanel" class="mobile-nav-panel" aria-label="Menú móvil">
+      <ul class="mobile-nav-list">
+        <li>
+          <a href="{{ url_for('inicio') }}" class="mobile-nav-link {% if request.endpoint == 'inicio' %}active{% endif %}">Inicio</a>
+        </li>
+        <li class="mobile-nav-item-header">Problemas</li>
+        <li>
+          <a href="{{ url_for('pc') }}" class="mobile-nav-link {% if request.endpoint == 'pc' %}active{% endif %}">🖥️ Soporte para PC</a>
+        </li>
+        <li>
+          <a href="{{ url_for('celulares') }}" class="mobile-nav-link {% if request.endpoint == 'celulares' %}active{% endif %}">📱 Soporte para Celulares</a>
+        </li>
+        <li>
+          <a href="{{ url_for('buscar') }}" class="mobile-nav-link {% if request.endpoint == 'buscar' %}active{% endif %}">🔍 Buscar un problema</a>
+        </li>
+        <li class="mobile-nav-item-header">Diagnóstico y Herramientas</li>
+        <li>
+          <a href="{{ url_for('diagnostico') }}" class="mobile-nav-link {% if request.endpoint == 'diagnostico' %}active{% endif %}">🩺 Diagnóstico</a>
+        </li>
+        <li>
+          <a href="{{ url_for('herramientas') }}" class="mobile-nav-link {% if request.endpoint == 'herramientas' %}active{% endif %}">🛠️ Herramientas</a>
+        </li>
+        <li>
+          <a href="{{ url_for('mantenimiento') }}" class="mobile-nav-link {% if request.endpoint == 'mantenimiento' %}active{% endif %}">📋 Checklist de mantenimiento</a>
+        </li>
+        <li class="mobile-nav-item-header">Información</li>
+        <li>
+          <a href="{{ url_for('sobre') }}" class="mobile-nav-link {% if request.endpoint == 'sobre' %}active{% endif %}">ℹ️ Sobre TecnoAyuda</a>
+        </li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- Contenido Principal -->
+  <main class="site-main container">
+    {% block contenido %}{% endblock %}
+  </main>
+
+  <!-- Footer Completo y Estructurado -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-top">
+        <!-- Columna 1: Marca y descripción -->
+        <div class="footer-brand">
+          <div class="footer-logo-row">
+            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo de TecnoAyuda" class="brand-logo" width="34" height="34">
+            <span class="brand-text">Tecno<span>Ayuda</span></span>
+          </div>
+          <p class="footer-desc">Soluciones paso a paso para estudiantes y usuarios de tecnología.</p>
+        </div>
+
+        <!-- Columna 2: Navegación -->
+        <div>
+          <h3 class="footer-col-title">Navegación</h3>
+          <ul class="footer-links">
+            <li><a href="{{ url_for('inicio') }}" class="footer-link">Inicio</a></li>
+            <li><a href="{{ url_for('buscar') }}" class="footer-link">Problemas</a></li>
+            <li><a href="{{ url_for('diagnostico') }}" class="footer-link">Diagnóstico</a></li>
+            <li><a href="{{ url_for('herramientas') }}" class="footer-link">Herramientas</a></li>
+            <li><a href="{{ url_for('sobre') }}" class="footer-link">Sobre TecnoAyuda</a></li>
+          </ul>
+        </div>
+
+        <!-- Columna 3: Problemas por plataforma -->
+        <div>
+          <h3 class="footer-col-title">Problemas</h3>
+          <ul class="footer-links">
+            <li><a href="{{ url_for('pc') }}" class="footer-link">PC</a></li>
+            <li><a href="{{ url_for('celulares') }}" class="footer-link">Celulares</a></li>
+            <li><a href="{{ url_for('pc', sistema='Windows') }}" class="footer-link">Windows</a></li>
+            <li><a href="{{ url_for('celulares', sistema='Android') }}" class="footer-link">Android</a></li>
+            <li><a href="{{ url_for('celulares', sistema='iOS') }}" class="footer-link">iOS</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Barra inferior del Footer -->
+      <div class="footer-bottom">
+        <p>© 2026 TecnoAyuda</p>
+        <p class="footer-bottom-tagline">Soluciones paso a paso para estudiantes y usuarios de tecnología.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

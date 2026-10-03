@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+
+{% block title %}Herramientas - TecnoAyuda{% endblock %}
+{% block meta_description %}Herramientas prácticas para diagnosticar y mantener tus dispositivos en TecnoAyuda.{% endblock %}
+
+{% block contenido %}
+
+<div class="section-header">
+  <div class="breadcrumbs">
+    <a href="{{ url_for('inicio') }}">Inicio</a>
+    <span class="breadcrumb-sep">/</span>
+    <span>Herramientas</span>
+  </div>
+
+  <h1 class="section-title">
+    <span>🛠️</span> Herramientas de Soporte
+  </h1>
+  <p class="section-desc">Utilidades prácticas para ayudarte a diagnosticar, revisar y encontrar soluciones directas para tu equipo.</p>
+</div>
+
+<div class="tools-grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 1.5rem;">
+  <!-- Herramienta 1: Diagnóstico -->
+  <div class="tool-card">
+    <div>
+      <span class="tool-card-icon">🩺</span>
+      <h2 class="tool-card-title">Diagnóstico</h2>
+      <p class="tool-card-desc">Identifica posibles problemas de tu dispositivo respondiendo preguntas sencillas paso a paso.</p>
+    </div>
+    <div>
+      <a href="{{ url_for('diagnostico') }}" class="btn btn-primary" style="width: 100%;">
+        Comenzar diagnóstico →
+      </a>
+    </div>
+  </div>
+
+  <!-- Herramienta 2: Checklist -->
+  <div class="tool-card">
+    <div>
+      <span class="tool-card-icon">📋</span>
+      <h2 class="tool-card-title">Checklist de Mantenimiento</h2>
+      <p class="tool-card-desc">Revisa paso a paso los aspectos básicos de tu equipo para prevenir fallas frecuentes de rendimiento y seguridad.</p>
+    </div>
+    <div>
+      <a href="{{ url_for('mantenimiento') }}" class="btn btn-secondary" style="width: 100%;">
+        Abrir checklist →
+      </a>
+    </div>
+  </div>
+
+  <!-- Herramienta 3: Selector de dispositivo -->
+  <div class="tool-card">
+    <div>
+      <span class="tool-card-icon">💻</span>
+      <h2 class="tool-card-title">Selector de dispositivo</h2>
+      <p class="tool-card-desc">Encuentra soluciones según el dispositivo que estás utilizando (Computadores PC o Teléfonos Celulares).</p>
+    </div>
+    <div style="display: flex; gap: 0.5rem; flex-direction: column;">
+      <a href="{{ url_for('pc') }}" class="btn btn-outline" style="width: 100%;">
+        🖥️ Soluciones para PC
+      </a>
+      <a href="{{ url_for('celulares') }}" class="btn btn-outline" style="width: 100%;">
+        📱 Soluciones para Celulares
+      </a>
+    </div>
+  </div>
+
+  <!-- Herramienta 4: Buscador general -->
+  <div class="tool-card">
+    <div>
+      <span class="tool-card-icon">🔍</span>
+      <h2 class="tool-card-title">Buscador de soluciones</h2>
+      <p class="tool-card-desc">Encuentra directamente soluciones escribiendo síntomas o palabras clave en nuestro catálogo de 301 guías.</p>
+    </div>
+    <div>
+      <a href="{{ url_for('buscar') }}" class="btn btn-secondary" style="width: 100%;">
+        Ir al buscador →
+      </a>
+    </div>
+  </div>
+</div>
+
+<div class="diagnostic-banner" style="margin-top: 3.5rem;">
+  <div class="diagnostic-banner-text">
+    <div class="diagnostic-banner-tag">Asistencia guiada</div>
+    <h2 class="diagnostic-banner-title">¿No sabes por dónde empezar?</h2>
+    <p class="diagnostic-banner-desc">El asistente de diagnóstico te guía según el tipo de dispositivo y sistema operativo para encontrar la solución correcta.</p>
+  </div>
+  <div>
+    <a href="{{ url_for('diagnostico') }}" class="btn btn-primary">
+      Iniciar asistente →
+    </a>
+  </div>
+</div>
+
+{% endblock %}

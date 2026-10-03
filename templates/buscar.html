@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+
+{% block title %}{% if consulta %}Resultados para "{{ consulta }}" - TecnoAyuda{% else %}Buscar un problema - TecnoAyuda{% endif %}{% endblock %}
+{% block meta_description %}Busca tu problema de PC o celular entre 301 soluciones explicadas de forma simple en TecnoAyuda.{% endblock %}
+
+{% block contenido %}
+
+<div class="section-header">
+  <div class="breadcrumbs">
+    <a href="{{ url_for('inicio') }}">Inicio</a>
+    <span class="breadcrumb-sep">/</span>
+    <span>Buscador</span>
+  </div>
+
+  <h1 class="section-title">
+    <span>🔍</span> Buscador de Soluciones
+  </h1>
+  <p class="section-desc">Escribe lo que le sucede a tu dispositivo para encontrar la guía adecuada.</p>
+</div>
+
+<!-- Barra de Búsqueda -->
+<div class="search-box-wrapper" style="margin-bottom: 2.5rem;">
+  <form action="{{ url_for('buscar') }}" method="get" class="search-form">
+    <div class="search-input-group">
+      <span class="search-icon" aria-hidden="true">🔍</span>
+      <input 
+        type="text" 
+        id="q" 
+        name="q" 
+        class="search-input" 
+        placeholder="Ej: Windows lento, Wi-Fi no conecta, poco espacio, batería se agota..."
+        value="{{ consulta }}"
+        aria-label="Buscar un problema"
+        required
+      >
+    </div>
+    <button type="submit" class="btn btn-primary search-button">
+      Buscar
+    </button>
+  </form>
+
+  <!-- Sugerencias de búsqueda rápida -->
+  <div class="quick-access-section" style="margin-top: 0.85rem;">
+    <span class="quick-access-label">Prueba con:</span>
+    <a href="{{ url_for('buscar', q='lento') }}" class="quick-pill">Lento</a>
+    <a href="{{ url_for('buscar', q='espacio') }}" class="quick-pill">Espacio / Disco</a>
+    <a href="{{ url_for('buscar', q='bateria') }}" class="quick-pill">Batería</a>
+    <a href="{{ url_for('buscar', q='wifi') }}" class="quick-pill">Wi-Fi</a>
+    <a href="{{ url_for('buscar', q='pantalla') }}" class="quick-pill">Pantalla</a>
+  </div>
+</div>
+
+{% if consulta %}
+  {% if resultados %}
+    <div class="results-header">
+      <div class="results-count">
+        Se encontraron <strong>{{ resultados|length }}</strong> resultado(s) para "<strong>{{ consulta }}</strong>"
+      </div>
+      <div>
+        <a href="{{ url_for('buscar') }}" class="btn btn-text" style="font-size: 0.85rem;">
+          Limpiar búsqueda
+        </a>
+      </div>
+    </div>
+
+    <div class="problems-grid">
+      {% for prob in resultados %}
+        {% include "_tarjeta_problema.html" %}
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="empty-state">
+      <div class="empty-state-icon">🔎</div>
+      <h2 class="empty-state-title">No encontramos resultados para "{{ consulta }}"</h2>
+      <p class="empty-state-desc">
+        Intenta buscando con palabras más simples como <em>"disco"</em>, <em>"internet"</em> o <em>"carga"</em>. También puedes utilizar el asistente paso a paso.
+      </p>
+      <div style="display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap;">
+        <a href="{{ url_for('diagnostico') }}" class="btn btn-primary">
+          Ir al diagnóstico rápido →
+        </a>
+        <a href="{{ url_for('inicio') }}" class="btn btn-secondary">
+          Volver al inicio
+        </a>
+      </div>
+    </div>
+  {% endif %}
+{% else %}
+  <div class="empty-state" style="border-style: solid;">
+    <div class="empty-state-icon">💡</div>
+    <h2 class="empty-state-title">Explora nuestra base de conocimiento</h2>
+    <p class="empty-state-desc">
+      TecnoAyuda cuenta con 301 soluciones para problemas comunes en Windows, macOS, Linux, Android e iOS.
+    </p>
+    <div style="display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap;">
+      <a href="{{ url_for('pc') }}" class="btn btn-secondary">🖥️ Ver problemas de PC</a>
+      <a href="{{ url_for('celulares') }}" class="btn btn-secondary">📱 Ver problemas de Celular</a>
+    </div>
+  </div>
+{% endif %}
+
+{% endblock %}

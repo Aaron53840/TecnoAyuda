@@ -1,0 +1,25 @@
+<article class="problem-card">
+  <div class="problem-card-top">
+    <div class="problem-card-badges">
+      <span class="badge badge-system">{{ icono_sistema(prob.sistema) }} {{ prob.sistema }}</span>
+      <span class="badge badge-category">{{ icono_categoria(prob.categoria) }} {{ prob.categoria }}</span>
+    </div>
+    {% if prob.dificultad %}
+      <span class="badge badge-difficulty badge-{{ prob.dificultad|lower|replace('á','a') }}">{{ prob.dificultad }}</span>
+    {% endif %}
+  </div>
+
+  <h3 class="problem-card-title">
+    <a href="{{ url_for('problema', slug=prob.slug) }}">{{ prob.titulo }}</a>
+  </h3>
+
+  {% if prob.descripcion %}
+    <p class="problem-card-desc">{{ prob.descripcion }}</p>
+  {% endif %}
+
+  <div class="problem-card-footer">
+    <a href="{{ url_for('problema', slug=prob.slug) }}" class="problem-card-link">
+      Ver solución <span aria-hidden="true">→</span>
+    </a>
+  </div>
+</article>
